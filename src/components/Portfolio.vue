@@ -21,10 +21,10 @@
            class="fullscreen bg-chocolate">
         <section id="welcome"
                  class="section">
-          <h1 class="text-center">
+          <h1 class="text-center show-on-scroll">
             <i class="fa fa-user-circle"
                aria-hidden="true"></i>Nicky Keyse</h1>
-          <h2 class="text-center text-spaced">Learning responsive accessible front end web developement.</h2>
+          <h2 class="text-center text-spaced show-on-scroll">Learning responsive accessible front end web developement.</h2>
         </section>
       </div>
 
@@ -39,25 +39,27 @@
                  target="_blank">
                 <img src="https://i.ibb.co/wYyg14m/local-weather.png"
                      alt="Local Weather"
-                     class="thumbnail">
+                     class="thumbnail show-on-scroll">
                 <p class="text-spaced">Local Weather Project</p>
               </a>
             </div>
             <div class="project-tile">
-              <a href="https://codepen.io/taramouse/full/WxegOQ"
+              <a href="
+                 https://codepen.io/taramouse/full/WxegOQ"
                  target="_blank">
                 <img src="https://i.ibb.co/42wQpW8/quote-machine.png"
                      alt="Quote Machine"
-                     class="thumbnail">
+                     class="thumbnail show-on-scroll">
                 <p class="text-spaced">Quote Machine Project</p>
               </a>
             </div>
             <div class="project-tile">
-              <a href="https://codepen.io/taramouse/full/YzKZVEa"
+              <a href="
+                 https://codepen.io/taramouse/full/YzKZVEa"
                  target="_blank">
                 <img src="https://i.ibb.co/2cRP1XZ/tech-docs.png"
                      alt="Technical Document"
-                     class="thumbnail">
+                     class="thumbnail show-on-scroll">
                 <p class="text-spaced">Survey Form Project</p>
               </a>
             </div>
@@ -125,29 +127,63 @@
 <script>
 export default {
   mounted () {
-    //  set active nav on scroll
-    let mainNavLinks = document.querySelectorAll(".navbar ul li a")
-    let mainSections = document.querySelectorAll("main section")
+    this.setActiveNav()
+    // Detect request animation frame
+    var scroll = window.requestAnimationFrame ||
+      // IE Fallback
+      function (callback) { window.setTimeout(callback, 1000 / 60) }
+    var elementsToShow = document.querySelectorAll('.show-on-scroll')
 
-    let lastId
-    let cur = []
-
-    window.addEventListener("scroll", event => {
-      let fromTop = window.scrollY
-
-      mainNavLinks.forEach(link => {
-        let section = document.querySelector(link.hash)
-        let sectionOffsetTop = section.offsetTop - 40
-        if (
-          sectionOffsetTop <= fromTop &&
-          sectionOffsetTop + section.offsetHeight > fromTop
-        ) {
-          link.classList.add("active")
+    function loop () {
+      Array.prototype.forEach.call(elementsToShow, function (element) {
+        if (isElementInViewport(element)) {
+          element.classList.add('is-visible')
         } else {
-          link.classList.remove("active")
+          element.classList.remove('is-visible')
         }
       })
-    })
+
+      scroll(loop)
+    }
+
+    // Call the loop for the first time
+    loop()
+
+    // Helper function from: http://stackoverflow.com/a/7557433/274826
+    function isElementInViewport (el) {
+      var rect = el.getBoundingClientRect()
+      return (
+        (rect.top <= 0 &&
+          rect.bottom >= 0) ||
+        (rect.bottom >= (window.innerHeight || document.documentElement.clientHeight) &&
+          rect.top <= (window.innerHeight || document.documentElement.clientHeight)) ||
+        (rect.top >= 0 &&
+          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight))
+      )
+    }
+  },
+  methods: {
+    setActiveNav () {
+      //  set active nav on scroll
+      let mainNavLinks = document.querySelectorAll('.navbar ul li a')
+
+      window.addEventListener('scroll', event => {
+        let fromTop = window.scrollY
+
+        mainNavLinks.forEach(link => {
+          let section = document.querySelector(link.hash)
+          let sectionOffsetTop = section.offsetTop - 40
+          if (
+            sectionOffsetTop <= fromTop &&
+            sectionOffsetTop + section.offsetHeight > fromTop
+          ) {
+            link.classList.add('active')
+          } else {
+            link.classList.remove('active')
+          }
+        })
+      })
+    }
   }
 }
 </script>

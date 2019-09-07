@@ -108,7 +108,7 @@
               </span>
             </a>
           </div>
-          <h2 class="text-center text-spaced">Visit my profiles on the web for further information.</h2>
+          <h2 class="text-center text-spaced show-on-scroll">Visit my profiles on the web for further information.</h2>
         </section>
       </div>
     </main>
@@ -128,10 +128,12 @@ export default {
     this.setActiveNav()
     // use intersection observer to detect elements in the viewport.
     const setVisibleCallback = entries => {
-      entries.forEach(entry => {
+      entries.forEach(function (entry) {
         if (entry.isIntersecting) {
+          console.log('Adding is-visible to ', entry.target)
           entry.target.classList.add('is-visible')
         } else {
+          console.log('Removing is-visible from ', entry.target)
           entry.target.classList.remove('is-visible')
         }
       })
@@ -145,7 +147,7 @@ export default {
     const observer = new IntersectionObserver(setVisibleCallback, options)
 
     const targets = document.querySelectorAll('.show-on-scroll')
-    targets.forEach(target => {
+    targets.forEach(function (target) {
       observer.observe(target)
     })
   },

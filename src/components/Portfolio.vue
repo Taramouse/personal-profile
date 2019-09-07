@@ -130,10 +130,10 @@ export default {
     const setVisibleCallback = entries => {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          console.log('Adding is-visible to ', entry.target)
+          // console.log('Adding is-visible to ', entry.target)
           entry.target.classList.add('is-visible')
         } else {
-          console.log('Removing is-visible from ', entry.target)
+          // console.log('Removing is-visible from ', entry.target)
           entry.target.classList.remove('is-visible')
         }
       })

@@ -73,6 +73,7 @@
             <!-- Social media links -->
             <a href="https://twitter.com/nkeyse"
                aria-label="My Twitter profile."
+               class=" show-on-scroll"
                target="_blank">
               <span class="fa-stack fa-3x"
                     style="vertical-align: top;">
@@ -85,6 +86,7 @@
 
             <a href="https://uk.linkedin.com/in/nkeyse"
                aria-label="My LinkedIn Profile"
+               class=" show-on-scroll"
                target="_blank">
               <span class="fa-stack fa-3x"
                     style="vertical-align: top;">
@@ -98,6 +100,7 @@
             <a id="profile-link"
                href="https://github.com/taramouse"
                aria-label="My GitHub Profile"
+               class=" show-on-scroll"
                target="_blank">
               <span class="fa-stack fa-3x"
                     style="vertical-align: top;">

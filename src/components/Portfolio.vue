@@ -44,8 +44,7 @@
               </a>
             </div>
             <div class="project-tile">
-              <a href="
-                 https://codepen.io/taramouse/full/WxegOQ"
+              <a href="https://codepen.io/taramouse/full/WxegOQ"
                  target="_blank">
                 <img src="https://i.ibb.co/42wQpW8/quote-machine.png"
                      alt="Quote Machine"
@@ -54,8 +53,7 @@
               </a>
             </div>
             <div class="project-tile">
-              <a href="
-                 https://codepen.io/taramouse/full/YzKZVEa"
+              <a href="https://codepen.io/taramouse/full/YzKZVEa"
                  target="_blank">
                 <img src="https://i.ibb.co/2cRP1XZ/tech-docs.png"
                      alt="Technical Document"
@@ -128,39 +126,28 @@
 export default {
   mounted () {
     this.setActiveNav()
-    // Detect request animation frame
-    var scroll = window.requestAnimationFrame ||
-      // IE Fallback
-      function (callback) { window.setTimeout(callback, 1000 / 60) }
-    var elementsToShow = document.querySelectorAll('.show-on-scroll')
-
-    function loop () {
-      Array.prototype.forEach.call(elementsToShow, function (element) {
-        if (isElementInViewport(element)) {
-          element.classList.add('is-visible')
+    // use intersection observer to detect elements in the viewport.
+    const setVisibleCallback = entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible')
         } else {
-          element.classList.remove('is-visible')
+          entry.target.classList.remove('is-visible')
         }
       })
-
-      scroll(loop)
     }
 
-    // Call the loop for the first time
-    loop()
-
-    // Helper function from: http://stackoverflow.com/a/7557433/274826
-    function isElementInViewport (el) {
-      var rect = el.getBoundingClientRect()
-      return (
-        (rect.top <= 0 &&
-          rect.bottom >= 0) ||
-        (rect.bottom >= (window.innerHeight || document.documentElement.clientHeight) &&
-          rect.top <= (window.innerHeight || document.documentElement.clientHeight)) ||
-        (rect.top >= 0 &&
-          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight))
-      )
+    let options = {
+      root: null,
+      threshold: 0.5
     }
+
+    const observer = new IntersectionObserver(setVisibleCallback, options)
+
+    const targets = document.querySelectorAll('.show-on-scroll')
+    targets.forEach(target => {
+      observer.observe(target)
+    })
   },
   methods: {
     setActiveNav () {
